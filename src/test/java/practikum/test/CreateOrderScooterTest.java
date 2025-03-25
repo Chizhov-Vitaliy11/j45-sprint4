@@ -35,6 +35,9 @@ public class CreateOrderScooterTest {
     public int indexColorScooter;
     @Parameterized.Parameter(8)
     public String comment;
+    @Parameterized.Parameter(9)
+    public int indexButtonOrder;
+
     @Rule
     public final BrowserRule browserRule = new BrowserRule();
 
@@ -42,9 +45,9 @@ public class CreateOrderScooterTest {
     @Parameterized.Parameters
     public static Object[] getTextImportantQuestions() {
         return new Object[][]{
-                {"Иван","Иванов","",20,"799999999999","23.03.2025",2,1,"Комментарий"},
-                {"Петр","Сидоров","ул.Пушкина",35,"799999999999","27.03.2025",1,0,"Комментарий"},
-                {"Анастасия","Васнецова","",45,"799999999999","25.03.2025",0,1,"Комментарий"},
+                {"Иван","Иванов","",20,"799999999999","23.03.2025",2,1,"Комментарий",0},
+                {"Петр","Сидоров","ул.Пушкина",35,"799999999999","27.03.2025",1,0,"Комментарий",1},
+                {"Анастасия","Васнецова","",45,"799999999999","25.03.2025",0,1,"Комментарий",0},
 
 
         };
@@ -56,8 +59,9 @@ public class CreateOrderScooterTest {
         Steps steps = new Steps(browserRule.getWebDriver());
         MainPage mainPage = new MainPage();
         steps.openSait(mainPage.getUrl());
+        List<WebElement> buttonsOrder = steps.elementFromTheList(mainPage.getButtonsToOrder());
         //Нажать на кнопку "Заказать"
-        steps.click(mainPage.getButtonsToOrder());
+        steps.click(By.xpath(".//button[@class ='"+buttonsOrder.get(indexButtonOrder).getAttribute("class")+"']"));
         FormCreateOrderPage formCreateOrderPage = new FormCreateOrderPage();
         //Ожидание поле Фамилия
         steps.wait(formCreateOrderPage.getInputSecondName(), 5);
