@@ -16,7 +16,7 @@ public class BrowserRule extends ExternalResource {
 
     protected void before() {
         ChromeOptions options = new ChromeOptions();
-         options.addArguments("--no-sandbox", "--disable-dev-shm-usage");
+        options.addArguments("--no-sandbox", "--disable-dev-shm-usage","--headless");
         webDriver = new ChromeDriver(options);
 
         webDriver.manage().timeouts().implicitlyWait(Duration.ofSeconds(3));
