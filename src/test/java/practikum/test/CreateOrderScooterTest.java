@@ -1,10 +1,12 @@
 package practikum.test;
 
+import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import practikum.pom.FormCreateOrderPage;
 import practikum.pom.MainPage;
@@ -17,6 +19,8 @@ import static org.junit.Assert.assertEquals;
 
 @RunWith(Parameterized.class)
 public class CreateOrderScooterTest {
+
+
     @Parameterized.Parameter
     public String name;
     @Parameterized.Parameter(1)
@@ -38,10 +42,15 @@ public class CreateOrderScooterTest {
     @Parameterized.Parameter(9)
     public int indexButtonOrder;
 
+    private WebDriver webDriver;
     @Rule
     public final BrowserRule browserRule = new BrowserRule();
 
 
+    @Before
+    public void before(){
+        this.webDriver=browserRule.getWebDriver();
+    }
     @Parameterized.Parameters
     public static Object[] getTextImportantQuestions() {
         return new Object[][]{
@@ -56,7 +65,7 @@ public class CreateOrderScooterTest {
     @Test
     public void checkModalWindowSuccessCreateOrder() {
 
-        Steps steps = new Steps(browserRule.getWebDriver());
+        Steps steps = new Steps(webDriver);
         MainPage mainPage = new MainPage();
         steps.openSait(mainPage.getUrl());
         List<WebElement> buttonsOrder = steps.elementFromTheList(mainPage.getButtonsToOrder());
@@ -135,6 +144,7 @@ public class CreateOrderScooterTest {
 
 
     }
+
 
 
 }
