@@ -1,5 +1,6 @@
 package practikum.test;
 
+import org.junit.Before;
 import org.junit.Rule;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
@@ -26,12 +27,18 @@ public class ListImportantQuestionsTest {
 
     private final String textAnswer;
     private final int indexQuestion;
+    private  Steps steps;
     @Rule
     public final BrowserRule browserRule = new BrowserRule();
 
+    @Before
+    public void before() {
+        this.steps= new Steps(browserRule.getWebDriver());
+    }
+
     public ListImportantQuestionsTest(int indexQuestion, String textAnswer) {
-        this.indexQuestion=indexQuestion;
-        this.textAnswer=textAnswer;
+        this.indexQuestion = indexQuestion;
+        this.textAnswer = textAnswer;
     }
 
     @Parameterized.Parameters
@@ -52,7 +59,6 @@ public class ListImportantQuestionsTest {
     public void checkList() {
 
 
-        Steps steps = new Steps(browserRule.getWebDriver());
         MainPage mainPage = new MainPage();
         steps.openSait(mainPage.getUrl());
 
@@ -62,10 +68,7 @@ public class ListImportantQuestionsTest {
 
         steps.click(By.id(ItemHeadings.get(indexQuestion).getAttribute("id")));
         steps.wait(By.id(ItemPanels.get(indexQuestion).getAttribute("id")), 5);
-        assertEquals("Показан не тот текст в вопросе: "+ ItemHeadings.get(indexQuestion).getText(),textAnswer , ItemPanels.get(indexQuestion).getText());
-
-
-
+        assertEquals("Показан не тот текст в вопросе: " + ItemHeadings.get(indexQuestion).getText(), textAnswer, ItemPanels.get(indexQuestion).getText());
 
 
     }

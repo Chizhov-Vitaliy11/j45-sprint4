@@ -1,5 +1,6 @@
 package practikum.test;
 
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -41,31 +42,30 @@ public class CreateOrderScooterTest {
     public String comment;
     @Parameterized.Parameter(9)
     public int indexButtonOrder;
+    private  Steps steps;
 
-    private WebDriver webDriver;
     @Rule
     public final BrowserRule browserRule = new BrowserRule();
 
-
     @Before
-    public void before(){
-        this.webDriver=browserRule.getWebDriver();
+    public void before() {
+        this.steps= new Steps(browserRule.getWebDriver());
     }
+
     @Parameterized.Parameters
     public static Object[] getTextImportantQuestions() {
         return new Object[][]{
-                {"Иван","Иванов","",20,"799999999999","23.03.2025",2,1,"Комментарий",0},
-                {"Петр","Сидоров","ул.Пушкина",35,"799999999999","27.03.2025",1,0,"Комментарий",1},
-                {"Анастасия","Васнецова","",45,"799999999999","25.03.2025",0,1,"Комментарий",0},
+                {"Иван", "Иванов", "", 20, "799999999999", "23.03.2025", 2, 1, "Комментарий", 0},
+                {"Петр", "Сидоров", "ул.Пушкина", 35, "799999999999", "27.03.2025", 1, 0, "Комментарий", 1},
+                {"Анастасия", "Васнецова", "", 45, "799999999999", "25.03.2025", 0, 1, "Комментарий", 0},
 
 
         };
     }
-
     @Test
     public void checkModalWindowSuccessCreateOrder() {
 
-        Steps steps = new Steps(webDriver);
+
         MainPage mainPage = new MainPage();
         steps.openSait(mainPage.getUrl());
         List<WebElement> buttonsOrder = steps.elementFromTheList(mainPage.getButtonsToOrder());
@@ -144,6 +144,7 @@ public class CreateOrderScooterTest {
 
 
     }
+
 
 
 
