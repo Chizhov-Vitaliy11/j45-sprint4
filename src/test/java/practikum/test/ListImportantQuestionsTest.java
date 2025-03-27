@@ -1,7 +1,9 @@
 package practikum.test;
 
+import jdk.jfr.Description;
 import org.junit.Before;
 import org.junit.Rule;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 import org.openqa.selenium.By;
@@ -15,7 +17,7 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import practikum.pom.MainPage;
 import practikum.rules.BrowserRule;
-import practikum.steps.Steps;
+
 
 import javax.swing.text.Element;
 import java.util.List;
@@ -27,13 +29,13 @@ public class ListImportantQuestionsTest {
 
     private final String textAnswer;
     private final int indexQuestion;
-    private  Steps steps;
+    private  MainPage mainPage;
     @Rule
     public final BrowserRule browserRule = new BrowserRule();
 
     @Before
     public void before() {
-        this.steps= new Steps(browserRule.getWebDriver());
+        this.mainPage= new MainPage(browserRule.getWebDriver());
     }
 
     public ListImportantQuestionsTest(int indexQuestion, String textAnswer) {
@@ -56,19 +58,11 @@ public class ListImportantQuestionsTest {
     }
 
     @Test
+    @Description("Проверка текста в разделе 'Вопросы о важном'")
     public void checkList() {
-
-
-        MainPage mainPage = new MainPage();
-        steps.openSait(mainPage.getUrl());
-
-
-        List<WebElement> ItemHeadings = browserRule.getWebDriver().findElements(mainPage.getItemHeadings()); // Список заголовок
-        List<WebElement> ItemPanels = browserRule.getWebDriver().findElements(mainPage.getItemPanels()); // Список панелей
-
-        steps.click(By.id(ItemHeadings.get(indexQuestion).getAttribute("id")));
-        steps.wait(By.id(ItemPanels.get(indexQuestion).getAttribute("id")), 5);
-        assertEquals("Показан не тот текст в вопросе: " + ItemHeadings.get(indexQuestion).getText(), textAnswer, ItemPanels.get(indexQuestion).getText());
+        mainPage.openSait()
+                .clickItemHeadings(indexQuestion);
+        assertEquals("ERROR : Показан не тот текст, какой показал:"+mainPage.getTextItemPanels(indexQuestion)+" ожидаемый текст:"+textAnswer, textAnswer, mainPage.getTextItemPanels(indexQuestion));
 
 
     }
