@@ -27,7 +27,6 @@
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
             <version>4.13.2</version> <!-- Используйте последнюю версию -->
-
         </dependency>
 
         <dependency>
